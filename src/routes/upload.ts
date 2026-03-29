@@ -3,7 +3,7 @@ import multer from "multer";
 import { uploadToLocalS3 } from "../services/upload-local.service.js";
 import { uploadToRealS3 } from "../services/upload-real.service.js";
 
-const router = Router();
+const router:Router = Router();
 const upload = multer();
 
 router.post("/local", upload.single("file"), async (req, res) => {

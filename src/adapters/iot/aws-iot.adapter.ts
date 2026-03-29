@@ -11,6 +11,7 @@ import {
     StartStreamCommand,
     StopStreamCommand,
   } from "../../core/types.js";
+import { config } from "../../config.js";
   
   type CommandHandlers = {
     onStartStream?: (cmd: StartStreamCommand) => Promise<void>;
@@ -23,25 +24,43 @@ import {
   
     async connect(): Promise<void> {
       if (this.connection) return;
-  
       const clientBootstrap = new io.ClientBootstrap();
-      const credentialsProvider = auth.AwsCredentialsProvider.newDefault();
-  
-      const config = iot.AwsIotMqttConnectionConfigBuilder
+      const credentialsProvider = auth.AwsCredentialsProvider.newStatic(
+        config.aws_accessKeyId!,
+        config.aws_secretAccessKey!,
+      )
+      const iot_config = iot.AwsIotMqttConnectionConfigBuilder
         .new_with_websockets({
           region: process.env.AWS_REGION!,
           credentials_provider: credentialsProvider,
         })
         .with_clean_session(false)
-        .with_client_id(`poc-controller-${Date.now()}`)
-        .with_endpoint(process.env.AWS_IOT_ENDPOINT!)
+        .with_client_id(process.env.CLIENT_ID || `poc-controller-${Date.now()}`)
+        .with_endpoint(process.env.IOT_ENDPOINT!)
         .build();
   
       const client = new mqtt.MqttClient(clientBootstrap);
-      this.connection = client.new_connection(config);
+      this.connection = client.new_connection(iot_config);
+      this.connection.on("connect", () => {
+        console.log("[AWS IoT] connected");
+      });
+  
+      this.connection.on("disconnect", () => {
+        console.log("[AWS IoT] disconnected");
+      });
+  
+      this.connection.on("error", (error) => {
+        console.error("[AWS IoT] error", error);
+      });
   
       await this.connection.connect();
-      console.log("[AWS IoT] Connected");
+
+      this.knownDevices.set("cam-01", {
+        deviceId: "cam-01",
+        online: true,
+        streaming: false,
+        lastSeenAt: new Date().toISOString(),
+      });
     }
   
     async publishDeviceOnline(deviceId: string): Promise<void> {

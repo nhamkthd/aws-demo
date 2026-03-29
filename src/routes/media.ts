@@ -29,7 +29,7 @@ import {
 } from "../local-media/medialive.service.js";
 import { startLocalMediaConvert } from "../local-media/mediaconvert.service.js";
 
-const router = Router();
+const router: Router = Router();
 
 router.get("/status", (_req, res) => {
   res.json({

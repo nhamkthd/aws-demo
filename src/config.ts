@@ -5,6 +5,8 @@ export const config = {
   region: process.env.AWS_REGION!,
   localstackEndpoint: process.env.LOCALSTACK_ENDPOINT!,
   sampleVideo: process.env.SAMPLE_VIDEO!,
+  aws_accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+  aws_secretAccessKey: process.env.AWS_ACCESS_KEY_SECRET!,
   
   buckets: {
     local: {

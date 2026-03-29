@@ -47,14 +47,20 @@ export interface PlaybackResult {
 /* =========================================================
  * DEVICE / IOT
  * ========================================================= */
-
 export interface DeviceStatus {
   deviceId: string;
   online: boolean;
   streaming: boolean;
   lastSeenAt?: string;
-}
 
+  kvsChannelId?: string;
+  kvsSignalingConnected?: boolean;
+
+  localHlsUrl?: string;
+  awsPlaybackUrl?: string;
+
+  streamSessionId?: string;
+}
 export interface DeviceStreamState {
   deviceId: string;
   channelId?: string;

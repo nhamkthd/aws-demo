@@ -5,17 +5,17 @@ import type {
   } from "./types.js";
 
   /**
-    devices/{deviceId}/status/online
-    devices/{deviceId}/status/offline
-    devices/{deviceId}/status/heartbeat
-    devices/{deviceId}/state
+devices/{deviceId}/status/online
+devices/{deviceId}/status/offline
+devices/{deviceId}/status/heartbeat
+devices/{deviceId}/state
 
-    devices/{deviceId}/commands/start-stream
-    devices/{deviceId}/commands/stop-stream
+devices/{deviceId}/commands/start-stream
+devices/{deviceId}/commands/stop-stream
 
-    devices/{deviceId}/events/stream-started
-    devices/{deviceId}/events/stream-stopped
-    devices/{deviceId}/events/error
+devices/{deviceId}/events/stream-started
+devices/{deviceId}/events/stream-stopped
+devices/{deviceId}/events/error
    */
   
   export interface IIoTService {

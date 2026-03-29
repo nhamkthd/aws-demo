@@ -2,7 +2,7 @@ import { Router } from "express";
 import { createIoTService } from "../core/iot.factory.js";
 import type { StreamTransport } from "../core/types.js";
 
-const router = Router();
+const router:Router = Router();
 const iot = createIoTService();
 
 let initialized = false;
@@ -13,6 +13,16 @@ async function ensureConnected() {
     initialized = true;
   }
 }
+
+router.get("/status", async (_req, res) => {
+  try {
+    await ensureConnected();
+    res.json({ ok: true, connected: true });
+  } catch (err: any) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+})
 
 router.get("/", async (_req, res) => {
   try {
