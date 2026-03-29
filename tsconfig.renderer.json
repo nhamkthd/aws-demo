@@ -1,0 +1,14 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+      "module": "esnext",
+      "moduleResolution": "bundler",
+      "target": "esnext",
+      "lib": ["dom", "dom.iterable", "esnext"],
+      "jsx": "react-jsx",
+      "types": ["node"],
+      "allowSyntheticDefaultImports": true,
+      "noEmit": false
+    },
+    "include": ["src/renderer/**/*"]
+  }
